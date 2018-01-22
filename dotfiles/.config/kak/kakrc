@@ -140,7 +140,7 @@ def -docstring 'invoke fzf to select a buffer' \
     if [ -z "$TMUX" ]; then
       echo echo only works inside tmux
     else
-      BUFFER=`echo ${kak_buflist} | tr : '\n' | fzf-tmux -d 30`
+      BUFFER=`echo ${kak_buflist} | tr : '\n' | fzf-tmux --preview 'cat {}'  -d 30`
       if [ -n "$BUFFER" ]; then
         echo "eval -client '$kak_client' 'buffer ${BUFFER}'" | kak -p ${kak_session}
       fi
