@@ -1,0 +1,41 @@
+directory: "/Volumes/MUSIC/Music Library/"
+library: "/Volumes/MUSIC/Beets/musiclibrary.blb"
+import:
+  move: yes
+  timid: yes
+  log: "/Volumes/MUSIC/Beets/log.txt"
+paths:
+  default: $albumartist/$year - $album/$track $artist - $title
+  singleton: $artist/No Album/$artist - $title
+  comp: Compilations/$year - $album/$track $artist - $title
+play:
+  command: /Applications/VLC.app/Contents/MacOS/VLC
+clutter: "no"
+
+replace:
+  '\.$': ''
+  '^\.': ''
+  ':'  : '.'
+
+plugins:
+  fromfilename
+  fetchart
+  embedart
+  scrub
+  ftintitle
+  missing
+  duplicates
+  fuzzy
+  web
+  convert
+  play
+  edit
+
+# convert:
+#   auto: yes
+#   format: mp3
+#   max_bitrate: 320
+#   threads: 4
+
+# zero:
+#   fields: Description encoded\ by Copyright Now\ playing Comment

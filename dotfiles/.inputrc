@@ -1,0 +1,16 @@
+set bell-style none
+$if mode=vi
+  set keymap vi-command
+  "gg":beginning-of-history
+  "G": end-of-history
+  "dd": kill-whole-line
+  "\C-b": backward-kill-word
+  "\C-w": kill-word
+  "\C-p": history-search-backward
+  "h": backward-char
+  "s": forward-char
+  "H": beginning-of-line
+  "S": end-of-line
+  set keymap vi-insert
+  "tn": vi-movement-mode
+$endif

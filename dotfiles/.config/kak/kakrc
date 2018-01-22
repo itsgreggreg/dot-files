@@ -1,0 +1,148 @@
+  #
+  # FIX EDITOR CONFIG LOADING
+  #
+hook global InsertChar \t %{
+  exec -draft -itersel h@
+}
+
+
+  #
+  # Global window hooks
+  #
+
+hook global BufCreate .* %{editorconfig-load}
+  #
+  # Basic Settings
+  #
+
+# Show line numbers
+addhl global/ number_lines
+# Show matching brackets
+addhl global/ show_matching
+# Show whitespace characters
+addhl global/ show_whitespaces
+# Scroll offset
+set-option global scrolloff 5,0
+# Colors
+colorscheme lucius
+face Whitespace rgb:555555
+# Insert Cursor is black on yellow
+hook global InsertBegin .* %{
+ set-face PrimaryCursor rgb:000000,rgb:FFFF00+B
+}
+# Normal cursor is black on white
+hook global InsertEnd .* %{
+ set-face PrimaryCursor rgb:000000,rgb:ffffff
+}
+# Turn off autocomplete
+set global completers ""
+
+  #
+  # Normal Mode Commands
+  #
+
+# Use # to comment lines
+map global normal '#' :comment-line<ret>
+# <c-d> to select matches
+map global normal <c-d> *
+# <c-w> to select matches with word boundary
+map global normal <c-w> <a-*>
+# Move line down
+map global normal '(' :move-lines-down<ret>
+# Move line up
+map global normal ')' :move-lines-up<ret>
+# Change without yank
+map global normal c \"_c
+# Delete without yank
+map global normal d \"_d
+
+  #
+  # User key (,) bindings
+  #
+# ,l changes line preserving whitespace
+map global user l I<esc><a-l>c -docstring 'Change whole line preserving whitespace'
+# ,y to yank to clipboard
+map global user y '<a-|>pbcopy<ret>' -docstring 'Yank to clipboard'
+# ,p to paste from clipboard without auto-indent
+map global user p '<a-!>pbpaste<ret>' -docstring 'Paste from clipboard'
+# ,f to open file with fzf
+map global user f ':of<ret>' -docstring 'Open File through fzf'
+# ,b to open buffer with fzf
+map global user b ':ob<ret>' -docstring 'Open Buffer through fzf'
+# ,c to close current buffer
+map global user c ':delete-buffer<ret>' -docstring 'Close current buffer.'
+# ,s to write current buffer
+map global user s ':write<ret>' -docstring 'Save current buffer'
+# ,< to pipe selection to sort
+map global user < '|sort<ret>' -docstring 'Sort selected lines'
+# ,> to pipe selection to sort in reverse order
+map global user > '|sort -r<ret>' -docstring 'Reverse sort selected lines'
+
+
+  #
+  # Hooks
+  #
+
+# Use jk or Jk to exit normal mode
+hook global InsertChar k %{ try %{
+  exec -draft hH <a-k>(j|J)k<ret> d
+  exec <esc>
+}}
+
+# Show training whitespace
+hook -group TrailingWhitespaces global WinCreate .* %{
+    addhl regex '\h+$' 0:default,red
+}
+
+  #
+  # Commands
+  #
+
+# Git shortcuts
+def blame %{ git blame }
+def blame! %{ git hide-blame}
+
+# Put filepath in clipboard
+def -docstring 'copy current filepath to clipboard' \
+  clip-path %{
+    %sh{ echo $kak_buffile | pbcopy }
+}
+
+# Move Lines Up and Down
+def move-lines-up -params 0..1 -docstring 'move-line-above [count]: select full lines and move line above' %{
+  exec "<a-x>yd%arg{1}k<a-P>"
+}
+
+def move-lines-down -params 0..1 -docstring 'move-line-below [count]: select full lines and move line below' %{
+  exec "<a-x>yd%arg{1}j<a-P>"
+}
+
+
+  #
+  # FZF integration
+  #
+
+def -docstring 'invoke fzf to open a file' \
+  of %{ %sh{
+    if [ -z "$TMUX" ]; then
+      echo echo only works inside tmux
+    else
+      FILE=$( fd --type f | fzf-tmux --preview 'cat {}' -d 30)
+      # FILE=$(ls -1 | fzf-tmux -d 15)
+      if [ -n "$FILE" ]; then
+        printf 'eval -client %%{%s} edit %%{%s}\n' "${kak_client}" "${FILE}" | kak -p "${kak_session}"
+      fi
+    fi
+}}
+
+def -docstring 'invoke fzf to select a buffer' \
+  ob %{ %sh{
+    if [ -z "$TMUX" ]; then
+      echo echo only works inside tmux
+    else
+      BUFFER=`echo ${kak_buflist} | tr : '\n' | fzf-tmux -d 30`
+      if [ -n "$BUFFER" ]; then
+        echo "eval -client '$kak_client' 'buffer ${BUFFER}'" | kak -p ${kak_session}
+      fi
+    fi
+}}

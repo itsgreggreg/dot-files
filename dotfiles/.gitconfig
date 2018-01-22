@@ -1,0 +1,79 @@
+# Notes
+# git checkout --conflict=diff3 *file* -> will checkout the conflicted file with all 3 relevant versions
+# git reset --hard new-tip-commit  -> to move a branch
+
+# core variables
+[core]
+  ; Don't trust file modes
+  filemode = false
+	editor = kak
+	excludesfile = /Users/gregb/.gitignore_global
+	excludesfile = /Users/jenkins/.gitignore_global
+
+[user]
+  name = greggreg
+  email = greg@greggreg.org
+
+[alias]
+  sshow = "!f() { git stash show stash^{/$*} -p; }; f"
+  sapply = "!f() { git stash apply stash^{/$*}; }; f"
+  sforce = "!git stash show -p | git apply && git stash drop"
+  swd = "stash save --keep-index -u"
+
+  # INFO
+  s  = "status"
+  sl = "shortlog"
+  l = "log --oneline --decorate --graph --all --relative-date"
+  ll = "log --graph --pretty=format:'%C(yellow)%h%Creset -%C(magenta)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --all"
+
+  # COMITTING
+  cm   = "commit -m"
+  cma  = "commit --amend"
+
+  # ADDING
+  aa = "add ."
+  ac = "add -u" # Only add changes, not untracked files
+
+  # CHECKOUT / BRANCHING
+  co = "checkout"
+  nb = "checkout -b" # new branch
+  db = "branch -d" # delete local branch
+  drb = "push origin --delete" # delete remote branch
+  b  = "branch" # show local branches
+  ba = "branch --all" # show all branches
+  # Pushes current branch to be remote tracked
+  pbr = "!git rev-parse --abbrev-ref HEAD | while read out; do git push -u origin $out; done"
+  # pbr = "push -u"
+  drb = "push origin --delete"
+
+  # PUSHING
+  po = "push origin"
+  pom = "push origin master"
+
+  # DIFFING
+  theirs = "checkout --theirs"
+  ours   = "checkout --ours"
+  d      = "diff"
+  dc     = "diff --cached"
+  d3     = "checkout --conflict=diff3"
+
+  # MISC
+  rhh = "reset --hard HEAD"
+  ltbc = "commit -m \"Let there be code\""
+  stash = "stash -u"
+  i = "!git init && git add . && git status"
+  oops = "reset --soft HEAD~"
+  pc = diff --cached --diff-algorithm=minimal -w
+
+[color]
+  ui = auto
+
+[merge]
+  conflictstyle = diff3
+	tool = opendiff
+[difftool "sourcetree"]
+	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
+	path =
+[mergetool "sourcetree"]
+	cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
+	trustExitCode = true

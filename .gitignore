@@ -1,0 +1,9 @@
+.DS_Store
+dotfiles/.config/beets
+dotfiles/.config/cmus
+dotfiles/.config/configstore
+dotfiles/.config/qBittorrent
+dotfiles/.config/vifm
+dotfiles/.config/wireshark
+dotfiles/.config/yarn
+
