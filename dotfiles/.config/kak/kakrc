@@ -90,7 +90,7 @@ hook global InsertChar k %{ try %{
 }}
 
 # Show training whitespace
-hook -group TrailingWhitespaces global WinCreate .* %{
+hook global BufCreate .* %{
     addhl regex '\h+$' 0:default,red
 }
 
