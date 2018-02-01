@@ -89,10 +89,6 @@ hook global InsertChar k %{ try %{
   exec <esc>
 }}
 
-# Show training whitespace
-hook global BufCreate .* %{
-    addhl regex '\h+$' 0:default,red
-}
 
   #
   # Commands
