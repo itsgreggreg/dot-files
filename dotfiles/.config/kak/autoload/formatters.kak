@@ -17,3 +17,9 @@ hook global BufCreate .*[.]hs %{
   set buffer formatcmd "hindent"
 }
 hook global BufWritePre .+\.hs %{ format }
+
+# Elixir
+hook global BufCreate .*[.](ex|exs) %{
+  set buffer formatcmd "mix format -"
+}
+hook global BufWritePre .+\.(ex|exs) %{ format }
