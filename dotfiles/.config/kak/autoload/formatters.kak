@@ -6,10 +6,10 @@ hook global BufCreate .*[.]elm %{
 hook global BufWritePre .+\.elm %{ format }
 
 # CSS, SCSS, JS, MD
-hook global BufCreate .*[.](css|scss|js|md) %{
+hook global BufCreate .*[.](css|scss|js|md|json) %{
   set buffer formatcmd "prettier --stdin --stdin-filepath=$kak_buffile"
 }
-hook global BufWritePre .+\.(css|scss|js|md) %{ format }
+hook global BufWritePre .+\.(css|scss|js|md|json) %{ format }
 
 
 # Haskell

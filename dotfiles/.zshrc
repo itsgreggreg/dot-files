@@ -101,6 +101,9 @@ alias mkdr=mkdir
 alias say='say -v Samantha'
 alias wifi='sudo spoof randomize Wi-Fi;networksetup -setairportpower en0 off;networksetup -setairportpower en0 on'
 
+# ENV
+export EDITOR=kak
+
 # Dotfiles
 export PATH=/usr/local/bin/rsync:$PATH
 export PATH=~/.dotfiles/pathfiles:$PATH
@@ -140,9 +143,6 @@ export PATH=~/.asdf/installs/python:$PATH
 . $HOME/.asdf/asdf.sh
 . $HOME/.asdf/completions/asdf.bash
 
-# ENV
-export EDITOR=kak
-
 # Kill a named kak session
 kak-kill() {
   if [ -z "$1" ]
@@ -155,3 +155,5 @@ kak-kill() {
 
 # Rust Path
 export PATH="$HOME/.cargo/bin:$PATH"
+
+export PATH=~/.local/bin:$PATH

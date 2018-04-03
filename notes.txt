@@ -1,0 +1,2 @@
+# Find and Replace folder wide
+fd -e ext | xargs  sed -i '' 's/Find/Replace/g'
