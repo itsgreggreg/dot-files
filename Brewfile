@@ -1,0 +1,5 @@
+brew "fd"
+brew "kakoune"
+brew "the_silver_searcher"
+brew "tree"
+brew "yarn"
