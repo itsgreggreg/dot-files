@@ -68,9 +68,6 @@
 [color]
   ui = auto
 
-[merge]
-  conflictstyle = diff3
-	tool = opendiff
 [difftool "sourcetree"]
 	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
 	path =

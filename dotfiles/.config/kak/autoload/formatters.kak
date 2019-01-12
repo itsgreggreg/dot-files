@@ -1,7 +1,7 @@
 
 # Elm
 hook global BufCreate .*[.]elm %{
-  set buffer formatcmd "elm-format --stdin"
+  set buffer formatcmd "elm-format --stdin --elm-version=0.19"
 }
 hook global BufWritePre .+\.elm %{ format }
 
@@ -23,3 +23,9 @@ hook global BufCreate .*[.](ex|exs) %{
   set buffer formatcmd "mix format -"
 }
 hook global BufWritePre .+\.(ex|exs) %{ format }
+
+# rust
+hook global BufCreate .*[.](rs) %{
+  set buffer formatcmd "rustfmt"
+}
+hook global BufWritePre .+\.(rs) %{ format }
