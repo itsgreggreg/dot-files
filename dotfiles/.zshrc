@@ -157,3 +157,11 @@ kak-kill() {
 export PATH="$HOME/.cargo/bin:$PATH"
 
 export PATH=~/.local/bin:$PATH
+
+# terminal weather report
+weather () {
+  curl wttr.in/$1
+}
+
+# Compiling erlang on mojave
+export KERL_CONFIGURE_OPTIONS="--enable-dynamic-ssl-lib --with-ssl=/usr/local/Cellar/openssl/1.0.2q"

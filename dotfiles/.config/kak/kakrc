@@ -36,7 +36,7 @@ hook global InsertEnd .* %{
  set-face buffer PrimaryCursor rgb:000000,rgb:ffffff
 }
 # Turn off autocomplete
-set global auto_complete  prompt
+set global autocomplete  prompt
 
   #
   # Normal Mode Commands
