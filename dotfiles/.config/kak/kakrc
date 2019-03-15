@@ -82,6 +82,9 @@ map global user > '|sort -r<ret>' -docstring 'Reverse sort selected lines'
 map global user w ':addhl buffer/ wrap <ret>' -docstring 'Linewrap on'
 # ,W to OFF linewrap in current buffer
 map global user W ':remove-highlighter buffer/ wrap <ret>' -docstring 'Linewrap off'
+# ,a for <alt-a> cos the right alt key sucks
+map global user a '<a-a>' -docstring 'Select surrounding object'
+
 
 
   #
