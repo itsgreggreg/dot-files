@@ -108,7 +108,7 @@ def blamee %{ git hide-blame}
 
 # Put filepath in clipboard
 def clip-path -docstring 'copy current filepath to clipboard' %{
-    eval %sh{ echo $kak_buffile | pbcopy }
+    eval %sh{ echo $kak_buffile | tr -d '\n' | pbcopy }
 }
 
 # Move Lines Up and Down
@@ -130,7 +130,7 @@ define-command -docstring 'Invoke fzf to open a file' -params 0 of %{
             printf 'fail "client was not started under tmux"\n'
         else
             #file="$(find . -type f |TMUX="${kak_client_env_TMUX}" fzf-tmux --preview 'cat {}' -d 30)"
-            file="$(rg --files |TMUX="${kak_client_env_TMUX}" fzf-tmux --preview 'cat {}' -d 30)"
+            file="$(rg --files |TMUX="${kak_client_env_TMUX}" fzf-tmux --preview 'bat --style changes --color always {}' -d 30)"
             if [ -n "$file" ]; then
                 printf 'edit "%s"\n' "$file"
             fi
@@ -143,18 +143,14 @@ define-command -docstring 'Invoke fzf to open a file' -params 0 of %{
 
 def -override -docstring 'invoke fzf to select a buffer' \
   ob %{eval %sh{
-      BUFFER=$(printf %s\\n ${kak_buflist} | sed "s/'//g" |fzf-tmux --preview 'cat {}' -d 30)
+      BUFFER=$(printf %s\\n ${kak_buflist} | sed "s/'//g" |fzf-tmux --preview 'bat --style changes --color always {}' -d 30)
       if [ -n "$BUFFER" ]; then
         echo buffer ${BUFFER}
       fi
 } }
 
-
-# Cursor position in buffer as percent
-# decl str modeline_pos_percent
-
-# hook global WinCreate .* %{
-#     hook window NormalIdle .* %{ %sh{
-#         echo "set window modeline_pos_percent '$(($kak_cursor_line * 100 / $kak_buf_line_count))'"
-#     } }
-# }
+#
+# Plugins
+#
+source ~/.config/kak/kakoune-edit-or-dir.kak
+alias global e edit-or-dir

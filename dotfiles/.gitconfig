@@ -9,6 +9,8 @@
 	editor = kak
 	excludesfile = /Users/gregb/.gitignore_global
 	excludesfile = /Users/jenkins/.gitignore_global
+[commit]
+  template = ~/.gitmessage
 
 [user]
   name = greggreg
