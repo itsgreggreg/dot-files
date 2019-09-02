@@ -6,10 +6,10 @@ hook global BufCreate .*[.]elm %{
 hook global BufWritePre .+\.elm %{ format }
 
 # CSS, SCSS, JS, MD
-hook global BufCreate .*[.](css|scss|js|md|json) %{
+hook global BufCreate .*[.](css|scss|js|md|json|html) %{
   set buffer formatcmd "prettier --stdin --stdin-filepath=$kak_buffile"
 }
-hook global BufWritePre .+\.(css|scss|js|md|json) %{ format }
+hook global BufWritePre .+\.(css|scss|js|md|json|html) %{ format }
 
 
 # Haskell
@@ -29,3 +29,10 @@ hook global BufCreate .*[.](rs) %{
   set buffer formatcmd "rustfmt"
 }
 hook global BufWritePre .+\.(rs) %{ format }
+
+
+# dart
+hook global BufCreate .*[.](dart) %{
+  set buffer formatcmd "dartfmt"
+}
+hook global BufWritePre .+\.(dart) %{ format }

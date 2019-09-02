@@ -56,6 +56,10 @@ map global normal ')' :move-lines-up<ret>
 map global normal c \"_c
 # Delete without yank
 map global normal d \"_d
+# Default paste is before cursor
+map global normal p P
+# Alt paste is after cursor
+map global normal P p
 
   #
   # User key (,) bindings
