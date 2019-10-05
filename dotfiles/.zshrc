@@ -163,5 +163,3 @@ weather () {
   curl wttr.in/$1
 }
 
-# Compiling erlang on mojave
-export KERL_CONFIGURE_OPTIONS="--enable-dynamic-ssl-lib --with-ssl=/usr/local/Cellar/openssl/1.0.2q"
