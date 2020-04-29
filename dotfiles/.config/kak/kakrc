@@ -21,6 +21,9 @@ addhl global/ number-lines
 addhl global/ show-matching
 # Show whitespace characters
 addhl global/ show-whitespaces
+# Show 80 and 100 column
+addhl global/ column 80 default,rgb:3a3a3a
+addhl global/ column 100 default,rgb:3a3a3a
 # Scroll offset
 set-option global scrolloff 5,0
 # Colors
@@ -28,11 +31,11 @@ colorscheme lucius
 face global Whitespace rgb:555555
 face global Comment rgb:777777
 # Insert Cursor is black on yellow
-hook global InsertBegin .* %{
+hook global InsertIdle .* %{
  set-face buffer PrimaryCursor rgb:000000,rgb:FFFF00+B
 }
 # Normal cursor is black on white
-hook global InsertEnd .* %{
+hook global NormalIdle .* %{
  set-face buffer PrimaryCursor rgb:000000,rgb:ffffff
 }
 # Turn off autocomplete
@@ -147,9 +150,13 @@ define-command -docstring 'Invoke fzf to open a file' -params 0 of %{
 
 def -override -docstring 'invoke fzf to select a buffer' \
   ob %{eval %sh{
-      BUFFER=$(printf %s\\n ${kak_buflist} | sed "s/'//g" |fzf-tmux --preview 'bat --style changes --color always {}' -d 30)
-      if [ -n "$BUFFER" ]; then
-        echo buffer ${BUFFER}
+      if [ -z "${kak_client_env_TMUX}" ]; then
+          printf 'fail "client was not started under tmux"\n'
+      else
+        BUFFER=$(printf %s\\n ${kak_buflist} | sed "s/'//g" |fzf-tmux --preview 'bat --style changes --color always {}' -d 30)
+        if [ -n "$BUFFER" ]; then
+          echo buffer ${BUFFER}
+        fi
       fi
 } }
 
@@ -158,3 +165,11 @@ def -override -docstring 'invoke fzf to select a buffer' \
 #
 source ~/.config/kak/kakoune-edit-or-dir.kak
 alias global e edit-or-dir
+
+#
+# More File Types
+#
+hook global BufCreate .*[.](lalrpop) %{
+    set-option buffer filetype rust
+}
+

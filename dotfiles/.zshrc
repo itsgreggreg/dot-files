@@ -100,6 +100,7 @@ alias beet='beet -c ~/.beets_config.yaml'
 alias mkdr=mkdir
 alias say='say -v Samantha'
 alias wifi='sudo spoof randomize Wi-Fi;networksetup -setairportpower en0 off;networksetup -setairportpower en0 on'
+alias clippy='cargo clippy --all-features -- --deny warnings --deny clippy::pedantic --deny clippy::nursery'
 
 # ENV
 export EDITOR=kak
@@ -137,12 +138,6 @@ local files
 # AWS cli
 export PATH=~/Library/Python/2.7/bin:$PATH
 
-# ASDF https://github.com/asdf-vm/asdf
-export PATH=~/.asdf/installs:$PATH
-export PATH=~/.asdf/installs/python:$PATH
-. $HOME/.asdf/asdf.sh
-. $HOME/.asdf/completions/asdf.bash
-
 # Kill a named kak session
 kak-kill() {
   if [ -z "$1" ]
@@ -162,4 +157,22 @@ export PATH=~/.local/bin:$PATH
 weather () {
   curl wttr.in/$1
 }
+
+export PATH="/usr/local/sbin:$PATH"
+
+export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
+export PATH="/usr/local/opt/libarchive/bin:$PATH"
+
+# ASDF https://github.com/asdf-vm/asdf
+export PATH=~/.asdf/installs:$PATH
+export PATH=~/.asdf/installs/python:$PATH
+. $HOME/.asdf/asdf.sh
+. $HOME/.asdf/completions/asdf.bash
+
+
+# Gleam dev
+alias gleamdev='~/Trash/gleam/gleam-compiler/target/release/gleam'
+
+# howdy dev
+alias hwdy='~/Trash/howdy/target/debug/howdy'
 

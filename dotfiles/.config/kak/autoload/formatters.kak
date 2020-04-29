@@ -11,7 +11,6 @@ hook global BufCreate .*[.](css|scss|js|md|json|html) %{
 }
 hook global BufWritePre .+\.(css|scss|js|md|json|html) %{ format }
 
-
 # Haskell
 hook global BufCreate .*[.]hs %{
   set buffer formatcmd "hindent"
@@ -36,3 +35,10 @@ hook global BufCreate .*[.](dart) %{
   set buffer formatcmd "dartfmt"
 }
 hook global BufWritePre .+\.(dart) %{ format }
+
+# Howdy
+hook global BufCreate .*[.]howdy %{
+  set buffer formatcmd "~/Trash/howdy/target/debug/howdy format --stdin"
+}
+hook global BufWritePre .+\.howdy %{ format }
+
